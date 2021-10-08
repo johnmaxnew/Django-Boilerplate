@@ -1,0 +1,18 @@
+
+  <div class="sidebar margin-1">
+
+    <h5 class="title1">Recent</h5>
+      <ul class="list-group">
+        {% for post in most_recent %}
+        <li class="list-group-item">
+          <a href="{% url 'blog_detail' post.slug %}" class="post-title">{{ post.title }}</a>
+        </li>
+         {% endfor %}
+      </ul>
+    <hr>
+
+  </div>
+
+
+
+
