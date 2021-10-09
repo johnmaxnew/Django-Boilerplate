@@ -1,0 +1,20 @@
+{% extends "base.html" %}
+<!-- {% load static %} -->
+{% block content %}
+<div class="container">
+  <div class="row margin-1">
+    <div class="col-md-3">
+        <!--sidebar-->
+        {% include 'sidebar.html'%}
+    </div>
+    <div class="col-md-9 margin-1">
+     
+        <h5 class="title2">{{ post.title }}</h5>
+        <p>{{ post.body | striptags | linebreaks }}</p>
+
+    </div>
+  </div>
+</div>
+{% endblock content %}
+
+
