@@ -5,7 +5,7 @@
       <ul class="list-group">
         {% for post in most_recent %}
           <li class="list-group-item">
-            <a href="{% url 'sampleapp_detail' post.slug %}" class="post-title">{{ post.title }}</a>
+            <a href="{% url 'sampleapp_detail' post.slug %}">{{ post.title }}</a>
           </li>
          {% endfor %}
       </ul>
