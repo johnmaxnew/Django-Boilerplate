@@ -1,15 +1,24 @@
 {% extends "base.html" %}
-<!-- {% load static %} -->
+{% load static %}
 {% block content %}
 <div class="container">
   <div class="row margin-1">
     <div class="col-md-3">
         <!--sidebar-->
-        {% include 'sidebar.html'%}
+        {% include 'sidebar.html' with most_recent=most_recent%}
     </div>
     <div class="col-md-9 margin-1">
      
         <h5 class="title2">{{ post.title }}</h5>
+            <small class="mt-2">
+                {{ post.created_on.date }} |&nbsp;
+                Tag:&nbsp;
+                {% for category in post.categories.all %}
+                    <a href="{% url 'sampleapp_category' category.name %}" class="p-tag">
+                        {{ category.name }}
+                    </a>&nbsp;
+                    {% endfor %}
+            </small>
         <p>{{ post.body | striptags | linebreaks }}</p>
 
     </div>

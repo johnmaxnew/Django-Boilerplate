@@ -1,36 +1,101 @@
 {% extends "base.html" %}
 {% block content %}
+
 <div class="container">
 <div class="row mt-3">
 <div class="col-md-3 mt-3">
 <!--sidebar-->
-{% include 'sidebar.html' %}
+{% include 'sidebar.html' with most_recent=most_recent %}
 </div>
 
 <div class="col-md-9">
 
 <h4 class="margin-2 title3">Search by keyword</h4>
+<hr>
+  <form class="search" action="" method="GET">
+    <input type="text" class="search-input" placeholder="Enter keyword..." name="title__icontains" id="id_title__icontains" value="">
+    <button type="submit" class="search-btn" name="button">Search</button>
+  </form>
+<br>
 
-      <div class="row">
-        {% for post in posts %}
-          <div class="col-md-4  text-center">
-              <div class="card style-1 mb-2">
-                  <div class="card-body">
-                    <h5 class="title3"><a href="{% url 'bank_detail' post.slug %}">{{ post.title }}</a></h5>
 
-                    <br>
-                  </div>
-              </div>
-          </div>
-          {% endfor %}
+
+  <div class="main">
+  {% for post in posts %}
+    <div class="card style-3 mt-3">
+
+        <div class="card-body">
+          <h5 class="title3"><a href="{% url 'sampleapp_detail' post.slug %}">{{ post.title }}</a></h5>
+            <small class="mt-2">
+                {{ post.created_on.date }} |&nbsp;
+                Tag:&nbsp;
+                {% for category in post.categories.all %}
+                    <a href="{% url 'sampleapp_category' category.name %}" class="p-tag">
+                        {{ category.name }}
+                    </a>&nbsp;
+                  {% endfor %}
+            </small>
+            <br>
+            <p class="mt-2">{{ post.body | striptags | slice:":300" }}...</p>
+        </div>
+        
+    </div>
+    {% endfor %}
+
+
+
+      <div class="d-flex justify-content-center align-items-center mt-3">
+          <nav aria-label="...">
+          {% if posts.has_other_pages %}
+            <ul class="pagination">
+                {% if posts.has_previous %}
+                    <li class="page-item"><a class="page-link" href="?page={{ posts.previous_page_number }}">Previous</a></li></span></li>
+                {% else %}
+                    <li class="page-item disabled"></li>
+                {% endif %}
+
+                {% for pages in posts.paginator.page_range %}
+                    {% if posts.number == pages %}
+                      <li class="page-item"><a class="page-link" href="#">{{pages}}</a></li></span></li>
+                    {% else %}
+                      <li class="page-item"><a class="page-link" href="?page={{pages}}">{{pages}}</a></li>
+                    {% endif %}
+                {% endfor %}
+
+                {% if posts.has_next %}
+                  <li class="page-item"><a class="page-link" href="?page={{ posts.next_page_number }}">Next</a></li>
+                {% else %}
+                  <li class="page-item disabled"></li>
+                {% endif %}
+            </ul>
+            {% endif %}
+          </nav>
       </div>
 
 
 
-    <div class="main">
-    </div>
-  </div>
-  </div>
-  </div>
-{% endblock content %}
 
+    </div>
+
+
+
+
+
+
+
+
+
+  
+  </div>
+
+
+  </div>
+  </div>
+  </div>
+
+
+
+
+
+
+{% endblock content %}
